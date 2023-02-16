@@ -7,7 +7,7 @@ ENV KUBECTL_VERSION "1.25.4"
 ENV HELM_VERSION "3.11.1"
 ENV KOPS_VERSION "1.25.3"
 
-RUN apt update -y && apt install -y curl git
+RUN apt update -y && apt install -y curl git fzf
 
 RUN curl -sLO https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
     chmod +x kubectl && \
