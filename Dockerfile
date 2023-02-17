@@ -6,6 +6,7 @@ FROM ubuntu
 ENV KUBECTL_VERSION "1.25.4"
 ENV HELM_VERSION "3.11.1"
 ENV KOPS_VERSION "1.25.3"
+ENV ISTIO_VERSION "1.16.2"
 
 RUN apt update -y && apt install -y curl git fzf
 
@@ -26,7 +27,10 @@ RUN git clone https://github.com/ahmetb/kubectx /opt/kubectx && \
     ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx && \
     ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 
+RUN curl -sL https://istio.io/downloadIstioctl | ISTIO_VERSION=${ISTIO_VERSION} TARGET_ARCH=x86_64 sh -
+
 RUN echo 'alias k="kubectl"' >> ~/.bashrc
 RUN echo 'alias kx="kubectx"' >> ~/.bashrc
-
+RUN echo 'export PATH=$HOME/.istioctl/bin:$PATH' >> ~/.bashrc
+RUN echo '[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"' >> ~/.bashrc
     
